@@ -57,7 +57,6 @@ public class AntiCapture {
         }
     }
 
-    // test..
     private static final class MacOS extends AntiCapture {
         public MacOS(long overlay, long owner) {
             try {
