@@ -2,7 +2,7 @@ package dev.ag2o.anticapture.os;
 
 public enum OS {
     Windows("Windows"),
-    MacOS("Mac OS"),
+    MacOS("MacOS"),
     IDK("Null"),
     ;
 

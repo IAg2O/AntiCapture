@@ -45,6 +45,8 @@ public class AntiCapture {
                 }
                 if (affinity != 0) {
                     User32Ext.INSTANCE.SetWindowDisplayAffinity(overlayHwnd, affinity);
+                } else {
+                    System.err.println("[AntiCapture] Error to set AntiCapture for this window: " + overlay + "; OS: " + OSVersion.getOs().toString() + " " + OSVersion.getVersion() + " " + OSVersion.getBuildVersion());
                 }
 
                 int oldS = User32Ext.INSTANCE.GetWindowLongA(overlayHwnd, User32Ext.GWL_EXSTYLE);
