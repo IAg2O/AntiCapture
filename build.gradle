@@ -1,0 +1,15 @@
+plugins {
+    id 'java'
+}
+
+group = 'dev.ag2o'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "net.java.dev.jna:jna:5.13.0"
+    implementation "net.java.dev.jna:jna-platform:5.13.0"
+}
