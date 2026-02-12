@@ -53,6 +53,10 @@ public final class AntiCapture {
                 CocoaLib.INSTANCE.objc_msgSend(nsWindow, setSharingPolicy, 1L);
             }
 
+            if (owner != 0) {
+
+            }
+
             Pointer setLevel = CocoaLib.INSTANCE.sel_registerName("setLevel:");
             CocoaLib.INSTANCE.objc_msgSend(nsWindow, setLevel, 3L);
         } catch (Exception e) {
