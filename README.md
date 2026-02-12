@@ -34,10 +34,10 @@ public class Main {
 ```
 
 ### 截图
-Used:  
+使用：  
 ![Used](/screenshot/img.png)
 
-Unused:  
+未使用：  
 ![Unused](/screenshot/img_1.png)
 
 # 本项目采用 **GPL v3** 开源协议。
