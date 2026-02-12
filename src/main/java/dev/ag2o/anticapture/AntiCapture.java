@@ -41,6 +41,7 @@ public final class AntiCapture {
         }
     }
 
+    // i not have a mac >_<
     public static void appleMac(long overlay, long owner) {
         try {
             Pointer nsWindow = new Pointer(overlay);
@@ -54,7 +55,8 @@ public final class AntiCapture {
             }
 
             if (owner != 0) {
-
+                Pointer parentWindow = new Pointer(owner);
+                CocoaLib.INSTANCE.objc_msgSend(parentWindow, CocoaLib.INSTANCE.sel_registerName("addChildWindow:ordered:"), nsWindow, 1L);
             }
 
             Pointer setLevel = CocoaLib.INSTANCE.sel_registerName("setLevel:");

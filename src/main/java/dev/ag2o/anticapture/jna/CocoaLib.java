@@ -8,4 +8,5 @@ public interface CocoaLib extends Library {
     CocoaLib INSTANCE = Native.load("AppKit", CocoaLib.class);
     Pointer sel_registerName(String name);
     void objc_msgSend(Pointer receiver, Pointer selector, long arg1);
+    void objc_msgSend(Pointer receiver, Pointer selector, Pointer arg1, long arg2);
 }
