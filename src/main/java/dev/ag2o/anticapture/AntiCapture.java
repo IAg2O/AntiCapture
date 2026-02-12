@@ -31,9 +31,11 @@ public class AntiCapture {
         public Windows(long overlay, long owner) {
             try {
                 WinDef.HWND overlayHwnd = new WinDef.HWND(new Pointer(overlay));
-                WinDef.HWND ownerHwnd = new WinDef.HWND(new Pointer(owner));
-
-                User32Ext.INSTANCE.SetWindowLongPtrA(overlayHwnd, User32Ext.GWLP_HWNDPARENT, ownerHwnd.getPointer());
+                if (owner != 0) {
+                    WinDef.HWND ownerHwnd = new WinDef.HWND(new Pointer(owner));
+                    User32Ext.INSTANCE.SetWindowLongPtrA(overlayHwnd, User32Ext.GWLP_HWNDPARENT, ownerHwnd.getPointer());
+                    User32Ext.INSTANCE.SetWindowPos(overlayHwnd, ownerHwnd, 0, 0, 0, 0, User32Ext.SWP_NOMOVE | User32Ext.SWP_NOSIZE | User32Ext.SWP_NOACTIVATE | User32Ext.SWP_FRAMECHANGED);
+                }
 
                 int affinity = 0;
                 if (OSVersion.getVersion() > 10 || (OSVersion.getVersion() == 10 && OSVersion.getBuildVersion() >= 18362)) {
@@ -45,16 +47,10 @@ public class AntiCapture {
                     User32Ext.INSTANCE.SetWindowDisplayAffinity(overlayHwnd, affinity);
                 }
 
-//                if (onlyAC) {
-//                    return;
-//                }
-
                 int oldS = User32Ext.INSTANCE.GetWindowLongA(overlayHwnd, User32Ext.GWL_EXSTYLE);
-                int newS = oldS | User32Ext.WS_EX_LAYERED | User32Ext.WS_EX_TRANSPARENT | User32Ext.WS_EX_TOOLWINDOW | User32Ext.WS_EX_NOACTIVATE;
+                int newS = oldS | User32Ext.WS_EX_LAYERED | User32Ext.WS_EX_TRANSPARENT | User32Ext.WS_EX_NOACTIVATE;
 
                 User32Ext.INSTANCE.SetWindowLongA(overlayHwnd, User32Ext.GWL_EXSTYLE, newS);
-
-                User32Ext.INSTANCE.SetWindowPos(overlayHwnd, ownerHwnd, 0, 0, 0, 0, User32Ext.SWP_NOMOVE | User32Ext.SWP_NOSIZE | User32Ext.SWP_NOACTIVATE | User32Ext.SWP_FRAMECHANGED);
             } catch (Exception e) {
                 e.printStackTrace();
             }
