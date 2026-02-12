@@ -46,12 +46,9 @@ public final class AntiCapture {
         try {
             Pointer nsWindow = new Pointer(overlay);
 
-            Pointer setSharingType = CocoaLib.INSTANCE.sel_registerName("setSharingType:");
-            CocoaLib.INSTANCE.objc_msgSend(nsWindow, setSharingType, 0L);
-
+            CocoaLib.INSTANCE.objc_msgSend(nsWindow, CocoaLib.INSTANCE.sel_registerName("setSharingType:"), 0L);
             if (OSVersion.getVersion() >= 12) {
-                Pointer setSharingPolicy = CocoaLib.INSTANCE.sel_registerName("setContentSharingPolicy:");
-                CocoaLib.INSTANCE.objc_msgSend(nsWindow, setSharingPolicy, 1L);
+                CocoaLib.INSTANCE.objc_msgSend(nsWindow, CocoaLib.INSTANCE.sel_registerName("setContentSharingPolicy:"), 1L);
             }
 
             if (owner != 0) {
@@ -59,8 +56,7 @@ public final class AntiCapture {
                 CocoaLib.INSTANCE.objc_msgSend(parentWindow, CocoaLib.INSTANCE.sel_registerName("addChildWindow:ordered:"), nsWindow, 1L);
             }
 
-            Pointer setLevel = CocoaLib.INSTANCE.sel_registerName("setLevel:");
-            CocoaLib.INSTANCE.objc_msgSend(nsWindow, setLevel, 3L);
+            CocoaLib.INSTANCE.objc_msgSend(nsWindow, CocoaLib.INSTANCE.sel_registerName("setLevel:"), 3L);
         } catch (Exception e) {
             e.printStackTrace();
         }
