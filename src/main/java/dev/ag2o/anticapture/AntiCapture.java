@@ -35,6 +35,11 @@ public class AntiCapture {
                     WinDef.HWND ownerHwnd = new WinDef.HWND(new Pointer(owner));
                     User32Ext.INSTANCE.SetWindowLongPtrA(overlayHwnd, User32Ext.GWLP_HWNDPARENT, ownerHwnd.getPointer());
                     User32Ext.INSTANCE.SetWindowPos(overlayHwnd, ownerHwnd, 0, 0, 0, 0, User32Ext.SWP_NOMOVE | User32Ext.SWP_NOSIZE | User32Ext.SWP_NOACTIVATE | User32Ext.SWP_FRAMECHANGED);
+
+                    int oldS = User32Ext.INSTANCE.GetWindowLongA(overlayHwnd, User32Ext.GWL_EXSTYLE);
+                    int newS = oldS | User32Ext.WS_EX_LAYERED | User32Ext.WS_EX_TRANSPARENT | User32Ext.WS_EX_NOACTIVATE;
+
+                    User32Ext.INSTANCE.SetWindowLongA(overlayHwnd, User32Ext.GWL_EXSTYLE, newS);
                 }
 
                 int affinity = 0;
@@ -48,11 +53,6 @@ public class AntiCapture {
                 } else {
                     System.err.println("[AntiCapture] Error to set AntiCapture for this window: " + overlay + "; OS: " + OSVersion.getOs().toString() + " " + OSVersion.getVersion() + " " + OSVersion.getBuildVersion());
                 }
-
-                int oldS = User32Ext.INSTANCE.GetWindowLongA(overlayHwnd, User32Ext.GWL_EXSTYLE);
-                int newS = oldS | User32Ext.WS_EX_LAYERED | User32Ext.WS_EX_TRANSPARENT | User32Ext.WS_EX_NOACTIVATE;
-
-                User32Ext.INSTANCE.SetWindowLongA(overlayHwnd, User32Ext.GWL_EXSTYLE, newS);
             } catch (Exception e) {
                 e.printStackTrace();
             }
