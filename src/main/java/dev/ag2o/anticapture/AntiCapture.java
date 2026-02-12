@@ -45,7 +45,15 @@ public final class AntiCapture {
         try {
             WinDef.HWND overlayHwnd = new WinDef.HWND(new Pointer(overlay));
 
-            User32Ext.INSTANCE.SetWindowDisplayAffinity(overlayHwnd, 0);
+            User32Ext.INSTANCE.SetWindowLongPtrA(overlayHwnd, User32Ext.GWLP_HWNDPARENT, Pointer.NULL);
+            User32Ext.INSTANCE.SetWindowPos(overlayHwnd, null, 0, 0, 0, 0, User32Ext.SWP_NOMOVE | User32Ext.SWP_NOSIZE | User32Ext.SWP_NOACTIVATE | User32Ext.SWP_FRAMECHANGED | User32Ext.SWP_NOZORDER);
+
+            int oldS = User32Ext.INSTANCE.GetWindowLongA(overlayHwnd, User32Ext.GWL_EXSTYLE);
+            int newS = oldS & ~User32Ext.WS_EX_LAYERED | User32Ext.WS_EX_TRANSPARENT | User32Ext.WS_EX_NOACTIVATE;
+
+            User32Ext.INSTANCE.SetWindowLongA(overlayHwnd, User32Ext.GWL_EXSTYLE, newS);
+
+            User32Ext.INSTANCE.SetWindowDisplayAffinity(overlayHwnd, User32Ext.WDA_NONE);
         } catch (Exception e) {
             e.printStackTrace();
         }
