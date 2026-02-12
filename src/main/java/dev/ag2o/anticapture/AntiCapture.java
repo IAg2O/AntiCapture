@@ -41,6 +41,16 @@ public final class AntiCapture {
         }
     }
 
+    public static void resetWindows(long overlay) {
+        try {
+            WinDef.HWND overlayHwnd = new WinDef.HWND(new Pointer(overlay));
+
+            User32Ext.INSTANCE.SetWindowDisplayAffinity(overlayHwnd, 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     // i not have a mac >_<
     public static void appleMac(long overlay, long owner) {
         try {
