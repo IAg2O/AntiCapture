@@ -10,9 +10,9 @@
 * Windows:
   1. 在 Windows 10 (1903+) 上支持完全防捕获`WDA_EXCLUDEFROMCAPTURE`。
   2. 在旧版本 Windows 只支持黑屏遮盖`WDA_MONITOR`。
-* MacOS:
-  1. 通过 AppKit 修改 `NSWindow` 的共享策略。
-  2. 支持 **MacOS 12+** 的最新内容共享安全特性。
+* ~~MacOS~~:
+  1. ~~通过 AppKit 修改 `NSWindow` 的共享策略。~~
+  2. ~~支持 **MacOS 12+** 的最新内容共享安全特性。~~
 
 ### 用法
 ```java
@@ -23,9 +23,10 @@ public class Main {
         // 你的窗口初始化
         // ...
 
-        // overlay: 要防捕获的窗口句柄
-        // owner: 父窗口句柄
-        AntiCapture.apply(overlay, owner);
+        // windowHandle: 要防捕获的窗口句柄
+        // ownerHandle: 父窗口句柄
+        AntiCapture.Windows.applyOwner(windowHandle, ownerHandle); // 同步位置
+        AntiCapture.Windows.applyAffinity(windowHandle); // 应用防捕获
 
         // 你的窗口渲染循环
         // ...
@@ -56,9 +57,9 @@ By leveraging **JNA** to interface with native Windows and macOS APIs, it makes 
 * Windows:
   1. **Windows 10 (1903+):** Supports `WDA_EXCLUDEFROMCAPTURE`, making the window completely invisible in captures.
   2. **Legacy Windows:** Falls back to `WDA_MONITOR`, resulting in a blacked-out window in captures.
-* MacOS:
-  1. Modifies `NSWindow` sharing policy via AppKit.
-  2. Supports the latest content sharing security features for **MacOS 12+**.
+* ~~MacOS:~~
+  1. ~~Modifies `NSWindow` sharing policy via AppKit.~~
+  2. ~~Supports the latest content sharing security features for **MacOS 12+**.~~
 
 ### Usage
 ```java
@@ -69,9 +70,10 @@ public class Main {
         // your window init
         //...
 
-        // overlay: The handle of the window to hide
-        // owner: The handle of the parent/owner window
-        AntiCapture.apply(overlay, owner);
+        // windowHandle: The handle of the window to hide
+        // ownerHandle: The handle of the parent/owner window
+        AntiCapture.Windows.applyOwner(windowHandle, ownerHandle); // sync position
+        AntiCapture.Windows.applyAffinity(windowHandle); // Applying Anti capture
 
         // your window render loop
         // ...
