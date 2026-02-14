@@ -1,5 +1,7 @@
 # Anti Capture
 
+## [中文](#中文) / [English](#english)
+
 ## 中文
 `AntiCapture` 是一个基于 Java 的轻量级实用库，旨在防止特定窗口被截图软件、录屏工具（如 [OBS](https://obsproject.com/)、[Discord](https://discord.com/)、[Zoom](https://zoom.us/) 等）捕获。
 
@@ -80,6 +82,13 @@ public class Main {
     }
 }
 ```
+
+### Snapshot
+Used：  
+![Used](/screenshot/img.png)
+
+Unused：  
+![Unused](/screenshot/img_1.png)
 
 # This project is licensed under **GPL v3**.
 * **For Open Source Projects**: Feel free to use it under the terms of GPL v3.
