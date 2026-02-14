@@ -92,6 +92,14 @@ public final class AntiCapture {
                 return;
             }
 
+            Windows state = applying.get(windowHandle);
+            if (state != null && state.owner) {
+                WinDef.HWND overlayHwnd = new WinDef.HWND(new Pointer(windowHandle));
+
+                User32Ext.INSTANCE.SetWindowLongPtrA(overlayHwnd, User32Ext.GWLP_HWNDPARENT, Pointer.NULL);
+                User32Ext.INSTANCE.SetWindowPos(overlayHwnd, null, 0, 0, 0, 0, User32Ext.SWP_NOMOVE | User32Ext.SWP_NOSIZE | User32Ext.SWP_NOACTIVATE | User32Ext.SWP_FRAMECHANGED | User32Ext.SWP_NOZORDER);
+                state.owner = false;
+            }
         }
 
         public static void resetStyle(long windowHandle) {
@@ -99,6 +107,15 @@ public final class AntiCapture {
                 return;
             }
 
+            Windows state = applying.get(windowHandle);
+            if (state != null && state.style) {
+                WinDef.HWND overlayHwnd = new WinDef.HWND(new Pointer(windowHandle));
+                int oldS = User32Ext.INSTANCE.GetWindowLongA(overlayHwnd, User32Ext.GWL_EXSTYLE);
+                int newS = oldS & ~User32Ext.WS_EX_LAYERED | User32Ext.WS_EX_TRANSPARENT | User32Ext.WS_EX_NOACTIVATE;
+
+                User32Ext.INSTANCE.SetWindowLongA(overlayHwnd, User32Ext.GWL_EXSTYLE, newS);
+                state.style = false;
+            }
         }
 
         public static void resetAffinity(long windowHandle) {
@@ -106,6 +123,13 @@ public final class AntiCapture {
                 return;
             }
 
+            Windows state = applying.get(windowHandle);
+            if (state != null && state.style) {
+                WinDef.HWND overlayHwnd = new WinDef.HWND(new Pointer(windowHandle));
+
+                User32Ext.INSTANCE.SetWindowDisplayAffinity(overlayHwnd, User32Ext.WDA_NONE);
+                state.style = false;
+            }
         }
     }
 }
