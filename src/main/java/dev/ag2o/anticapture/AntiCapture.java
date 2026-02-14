@@ -124,11 +124,11 @@ public final class AntiCapture {
             }
 
             Windows state = applying.get(windowHandle);
-            if (state != null && state.style) {
+            if (state != null && state.affinity) {
                 WinDef.HWND overlayHwnd = new WinDef.HWND(new Pointer(windowHandle));
 
                 User32Ext.INSTANCE.SetWindowDisplayAffinity(overlayHwnd, User32Ext.WDA_NONE);
-                state.style = false;
+                state.affinity = false;
             }
         }
     }
